@@ -1,0 +1,26 @@
+<component name="libraryTable">
+  <library name="Glassfish / JAX-WS 2.X RI / Metro 1.X / JWSDP 2.0-Glassfish / JAX-WS 2.X RI / Metro 1.X / JWSDP 2.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/activation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/FastInfoset.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/http.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jaxb-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jaxb-impl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jaxb-xjc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jaxws-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jaxws-rt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jaxws-tools.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jsr173_api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jsr181-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jsr250-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/resolver.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/saaj-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/saaj-impl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/sjsxp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/stax-ex.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/streambuffer.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

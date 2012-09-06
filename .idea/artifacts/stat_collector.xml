@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="stat-collector">
+    <output-path>$PROJECT_DIR$/out/artifacts/stat_collector</output-path>
+    <root id="archive" name="stat-collector.war">
+      <element id="javaee-facet-resources" facet="TaskForGuyFromUS1/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="TaskForGuyFromUS1" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Glassfish / JAX-WS 2.X RI / Metro 1.X / JWSDP 2.0-Glassfish / JAX-WS 2.X RI / Metro 1.X / JWSDP 2.0" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
