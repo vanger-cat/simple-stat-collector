@@ -1,15 +1,19 @@
 package pro.kristy.statisticcollector;
 
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,31 +21,65 @@ import java.util.Date;
  * Date: 03.09.12
  * Time: 9:58
  */
+
 public class StatisticsCollector extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BufferedReader in = request.getReader();
+        try {
+            List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss SSS Z");
-        String fileName = "statistic_" + simpleDateFormat.format(new Date()) + ".txt";
+            String fieldName;
+            String deviceId = "form field is not read yet";
 
-        String rootFolder;
-        rootFolder = "/home/user1/stat-colector/";
-//        rootFolder  = "/Users/vanger/";
-        String filePath = rootFolder + fileName;
-        PrintWriter writer = new PrintWriter(new FileOutputStream(filePath, true));
+            // в первом цикле определить deviceID
+            for (FileItem item : items) {
+                if (item.isFormField()) {
+                    fieldName = item.getFieldName();
+                    if (fieldName.equals("id")) {
+                        deviceId = item.getString();
+                    }
+                }
+            }
 
+            String baseFolder;
+            baseFolder = "/Users/vanger/stat-colector";
 
-        String line;
-        while ((line = in.readLine()) != null) {
-            writer.write(line);
-            writer.write("\n");
+            for (FileItem item : items) {
+                if (!item.isFormField()) {
+                    fieldName = item.getFieldName();
+                    InputStream filecontent = item.getInputStream();
+
+                    String rootFolder = baseFolder + deviceId + "/";
+
+                    boolean isCreated = new File(rootFolder).mkdir();
+                    System.out.println("created folder = " + rootFolder + " (" + isCreated + ")");
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss-SSS");
+                    String fileName = deviceId + " - " + fieldName + "-" + simpleDateFormat.format(new Date()) + ".txt";
+                    String filePath = rootFolder + fileName;
+
+                    PrintWriter writer = new PrintWriter(new FileOutputStream(filePath, true));
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(filecontent));
+
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        writer.write(line);
+                        writer.write("\n");
+                    }
+
+                    writer.close();
+                    response.getWriter().println(filePath);
+                    response.getWriter().flush();
+                }
+
+            }
+        } catch (FileUploadException e) {
+            throw new ServletException("Cannot parse multipart request.", e);
         }
 
-        writer.close();
-
-        response.getWriter().println(filePath);
-        response.getWriter().flush();
     }
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
@@ -54,4 +92,5 @@ public class StatisticsCollector extends HttpServlet {
         writer.write("Hello, " + name + ". Have a nice day!");
         writer.close();
     }
+
 }
